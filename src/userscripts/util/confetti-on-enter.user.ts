@@ -8,13 +8,15 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=jsdelivr.com
 // @grant        none
 // @require      https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js
+// @source       https://github.com/silly-internet-tricks/silly-internet-repo/blob/main/src/userscripts/util/confetti-on-click.user.ts
+// @downloadURL  https://gist.githubusercontent.com/silly-internet-tricks/4e8ef94816a1da701962aa42b8857e47/raw/confetti-on-click.user.js
+// @updateURL    https://gist.githubusercontent.com/silly-internet-tricks/4e8ef94816a1da701962aa42b8857e47/raw/confetti-on-click.meta.js
 // ==/UserScript==
 
 (function confettiOnEnter() {
  document.addEventListener('keypress', (e) => {
   // eslint-disable-next-line no-undef
-  if (e.code !== 'Enter') return;
-
+  if (e.code === 'Enter') {
   confetti({
    origin: {
     x: window.innerWidth / 2,
@@ -23,5 +25,6 @@
    particleCount: 100,
    spread: 360,
   });
+  }
  });
 })();
