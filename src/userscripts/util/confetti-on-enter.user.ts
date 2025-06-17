@@ -17,6 +17,7 @@
  document.addEventListener('keypress', (e) => {
   // eslint-disable-next-line no-undef
   if (e.code === 'Enter') {
+   console.log('MOAR CONFETTI!');
   confetti({
    origin: {
     x: window.innerWidth / 2,
