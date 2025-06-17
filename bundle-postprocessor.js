@@ -12,11 +12,14 @@ const processBundles = async function processBundles() {
  const userscriptGlob = await glob('./ts-compiled/**/*.user.js');
  const bundledUserscriptGlob = await glob('./dist/**/*.user.js');
  userscriptGlob.forEach(async (file) => {
+    console.log(`Processing ${file}`);
   const fileContents = await readFile(file);
 
-  const name = file.match(/([^./]+).user.js$/)[1];
+  const name = file.match(/([^./\\]+).user.js$/)[1];
+  console.log(`Name: ${name}`);
 
   const userscriptHeader = fileContents.toString().split(delimiter)[0] + delimiter;
+    console.log(`Userscript header: ${userscriptHeader}`);
 
   if (!userscriptHeader.match(/@source/)) {
    console.warn(`${file} is missing the source field in its metadata`);
@@ -39,7 +42,8 @@ const processBundles = async function processBundles() {
    (_, m1) => `${m1}${file.match(/[^/]*$/)[0].replace('.user.js', '.meta.js')}`,
   );
 
-  const distFile = bundledUserscriptGlob.find((e) => e.includes(`/${name}.user.js`));
+  const distFile = bundledUserscriptGlob.find((e) => e.match(new RegExp(`[/\\\\]${name}.user.js`)));
+  console.log(`Updating ${distFile}`);
 
   const distFileContents = await readFile(distFile);
   const bundleWithHeader = updateurlEditedUserscriptHeader + distFileContents.toString();
